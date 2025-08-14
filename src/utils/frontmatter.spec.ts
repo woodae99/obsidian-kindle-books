@@ -83,6 +83,7 @@ ${key}: ${value}
     const expectedYamlContent = `---
 bookName: New Book
 ---
+
 # Content
 ## Heading 1
 ## Heading 2
@@ -103,5 +104,19 @@ bookName: New Book
         },
       });
     }).not.toThrow();
+  });
+
+  it('Formats nested frontmatter objects on separate lines', () => {
+    const actual = mergeFrontmatter('', {
+      'kindle-sync': {
+        bookId: 'ABC123',
+        title: 'My Book',
+        author: 'An Author',
+      },
+    });
+
+    expect(actual).toContain(
+      'kindle-sync:\n  bookId: ABC123\n  title: My Book\n  author: An Author\n---'
+    );
   });
 });
