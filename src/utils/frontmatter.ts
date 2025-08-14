@@ -1,4 +1,5 @@
 import matter from 'gray-matter';
+import yaml from 'js-yaml';
 
 /**
  * Remove any falsy or undefined values from nested object
@@ -23,5 +24,7 @@ export const mergeFrontmatter = (
   const { data, content } = matter(textWithFrontMatter);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const mergedFrontMatter = Object.assign({}, data, cleanFrontmatter);
-  return matter.stringify(content, mergedFrontMatter);
+  const yamlContent = yaml.dump(mergedFrontMatter, { flowLevel: -1, lineWidth: -1 });
+  const trimmedContent = content.startsWith('\n') ? content.slice(1) : content;
+  return `---\n${yamlContent}---\n\n${trimmedContent}`;
 };
