@@ -34,20 +34,26 @@ export const parseAuthor = (scrapedAuthor: string): string => {
 };
 
 export const parseBooks = ($: Root): Book[] => {
-  const booksEl = $('.kp-notebook-library-each-book').toArray();
+  const booksEl = $('#kp-notebook-library > div[data-asin]').toArray();
 
   return booksEl.map((bookEl): Book => {
-    const title = $('h2.kp-notebook-searchable', bookEl).text()?.trim();
+    const title = $('h2.a-spacing-top-small', bookEl).text()?.trim();
+    const scrapedAuthor = $('p.a-spacing-top-small', bookEl).text()?.trim();
+    const scrapedLastAnnotatedDate = $(
+      '#kp-notebook-annotated-date',
+      bookEl
+    )
+      .text()
+      ?.trim();
 
-    const scrapedLastAnnotatedDate = $('[id^="kp-notebook-annotated-date"]', bookEl).val();
-    const scrapedAuthor = $('p.kp-notebook-searchable', bookEl).text();
+    const asin = $(bookEl).attr('data-asin');
 
     return {
       id: hash(title),
-      asin: $(bookEl).attr('id'),
+      asin,
       title,
       author: parseAuthor(scrapedAuthor),
-      url: `https://www.amazon.com/dp/${$(bookEl).attr('id')}`,
+      url: `https://www.amazon.com/dp/${asin}`,
       imageUrl: $('.kp-notebook-cover-image', bookEl).attr('src'),
       lastAnnotatedDate: parseToDateString(
         scrapedLastAnnotatedDate,
@@ -62,5 +68,3 @@ const scrapeBooks = async (): Promise<Book[]> => {
   const { dom } = await loadRemoteDom(region.notebookUrl, 1000);
   return parseBooks(dom);
 };
-
-export default scrapeBooks;
