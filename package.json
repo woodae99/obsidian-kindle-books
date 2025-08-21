@@ -81,5 +81,6 @@
   "lint-staged": {
     "*.ts": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
-  }
+  },
+  "type": "module"
 }

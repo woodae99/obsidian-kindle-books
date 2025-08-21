@@ -10,7 +10,12 @@
       "src": ["src/*", "tests/*"],
       "~/*": ["src/*"]
     },
-    "resolveJsonModule": true
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true
   },
   // Fixes errors when changing `module` to ES in the above compiler options
   // See: https://github.com/webpack/webpack-cli/issues/2458#issuecomment-846635277

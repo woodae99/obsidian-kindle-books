@@ -1,19 +1,18 @@
-export {};
-const CopyPlugin = require('copy-webpack-plugin');
-const dotenv = require('dotenv');
-const path = require('path');
-const sveltePreprocess = require('svelte-preprocess');
-const TerserPlugin = require('terser-webpack-plugin');
-const { Configuration, DefinePlugin } = require('webpack');
-
-const pack = require('./package.json');
+import CopyPlugin from 'copy-webpack-plugin';
+import dotenv from 'dotenv';
+import path from 'path';
+import sveltePreprocess from 'svelte-preprocess';
+import TerserPlugin from 'terser-webpack-plugin';
+import type { Configuration } from 'webpack';
+import { DefinePlugin } from 'webpack';
+import pack from './package.json' with { type: 'json' };
 
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 const releaseVersion = pack.version;
 
-const config: typeof Configuration = {
+const config: Configuration = {
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -89,4 +88,4 @@ const config: typeof Configuration = {
   },
 };
 
-module.exports = config;
+export default config;
