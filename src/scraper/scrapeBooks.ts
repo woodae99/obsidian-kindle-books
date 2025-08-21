@@ -68,5 +68,3 @@ const scrapeBooks = async (): Promise<Book[]> => {
   const { dom } = await loadRemoteDom(region.notebookUrl, 1000);
   return parseBooks(dom);
 };
-
-export default scrapeBooks;
