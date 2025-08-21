@@ -1,0 +1,2 @@
+Here are some examples of the HTML and source files from the read.amazon.com page.
+I've had to change LF to CRLF and shorten a few filenames so that Git stopped complaining, to please make any adjustments you need to.
